@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Credit Card Fraud Detection</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f2f2f2; text-align: center; padding: 50px; }
+        form { background: white; padding: 20px; display: inline-block; border-radius: 8px; }
+        input { margin: 5px; padding: 8px; width: 80%; }
+        button { padding: 10px 20px; margin: 10px; border: none; color: white; background: #4CAF50; }
+        .autofill-btn { background: #2196F3; }
+    </style>
+    <script>
+        function autoFill() {
+            document.getElementsByName('Time')[0].value = (Math.random() * 172792).toFixed(2); // Time between 0 to max seconds
+            for (let i = 1; i <= 28; i++) {
+                document.getElementsByName('V' + i)[0].value = (Math.random() * 10 - 5).toFixed(6); // Values between -5 and 5
+            }
+            document.getElementsByName('Amount')[0].value = (Math.random() * 2000).toFixed(2); // Amount up to 2000 dollars
+        }
+    </script>
+</head>
+<body>
+    <h1>Credit Card Fraud Detector</h1>
+    <form method="POST">
+        <input type="text" name="Time" placeholder="Time" required><br>
+        {% for i in range(1, 29) %}
+        <input type="text" name="V{{i}}" placeholder="Feature V{{i}}" required><br>
+        {% endfor %}
+        <input type="text" name="Amount" placeholder="Amount" required><br>
+        <button type="submit">Predict</button>
+        <button type="button" class="autofill-btn" onclick="autoFill()">Auto Fill Random Data</button>
+    </form>
+
+    {% if prediction_text %}
+        <h2>{{ prediction_text }}</h2>
+    {% endif %}
+</body>
+</html>
